@@ -34,7 +34,6 @@
 
 <script>
 import appImage from '../components/Image.vue';
-// import axios from 'axios';
 
 export default {
   components: {

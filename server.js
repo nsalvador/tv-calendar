@@ -1,3 +1,5 @@
+require('./config');
+
 const express = require("express");
 const app = express();
 const axios = require("axios");
@@ -7,14 +9,13 @@ const MongoClient = require("mongodb").MongoClient;
 const path = require("path");
 const AWS = require("aws-sdk");
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT
 const API_KEY = "9C6720573F21C156";
-const MONGODB_URI =
-  "mongodb://admin:mrch0305@ds161487.mlab.com:61487/tv-calendar";
+const MONGODB_URI = process.env.MONGODB_URI;
 
 AWS.config.update({
-  accessKeyId: "AKIAJBATSCYFVJTBW2CQ",
-  secretAccessKey: "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",
+  accessKeyId: process.env.S3_KEY,
+  secretAccessKey: process.env.S3_SECRET,
   region: "us-east-2"
 });
 
@@ -24,15 +25,15 @@ axios.defaults.baseURL = "https://api.thetvdb.com";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-//   );
-//   next();
-// });
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 
 function getSource(item) {
   return new Promise(async (resolve, reject) => {
@@ -73,7 +74,7 @@ function getDayOfWeek(item) {
       });
       axios.defaults.headers.common["Authorization"] = `Bearer ${
         response.data.token
-      }`;
+        }`;
       response = await axios.get(`/series/${item.id}`);
       item.airsDayOfWeek = response.data.data.airsDayOfWeek;
       resolve();
@@ -93,7 +94,7 @@ app.post("/show/search", async (req, res) => {
     });
     axios.defaults.headers.common["Authorization"] = `Bearer ${
       response.data.token
-    }`;
+      }`;
     response = await axios.get("/search/series", {
       params: { name: req.body.show }
     });
