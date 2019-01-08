@@ -21,7 +21,7 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-// axios.defaults.baseURL = "https://api.thetvdb.com";
+axios.defaults.baseURL = "https://api.thetvdb.com";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
