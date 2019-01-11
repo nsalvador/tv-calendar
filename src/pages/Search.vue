@@ -10,7 +10,7 @@
       <v-flex>
         <v-toolbar>
           <v-text-field
-            placeholder="Search for a TV series..."
+            placeholder="Search for a TV series and subscribe..."
             clearable
             prepend-inner-icon="search"
             @keyup.enter="search"

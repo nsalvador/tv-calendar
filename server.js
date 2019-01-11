@@ -1,4 +1,4 @@
-// require('./config');
+require('./config');
 
 const express = require("express");
 const app = express();
@@ -10,7 +10,7 @@ const path = require("path");
 const AWS = require("aws-sdk");
 
 const port = process.env.PORT
-const API_KEY = "9C6720573F21C156";
+const API_KEY = process.env.API_KEY;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 AWS.config.update({
@@ -25,15 +25,15 @@ axios.defaults.baseURL = "https://api.thetvdb.com";
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+//   );
+//   next();
+// });
 
 function getSource(item) {
   return new Promise(async (resolve, reject) => {
