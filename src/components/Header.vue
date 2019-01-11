@@ -2,9 +2,11 @@
   <v-toolbar app>
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-spacer></v-spacer>
-    <v-btn icon class="hidden-md-and-up">
-      <v-icon>more_vert</v-icon>
-    </v-btn>
+    <template v-if="!onStartPage">
+      <v-btn icon class="hidden-md-and-up">
+        <v-icon>more_vert</v-icon>
+      </v-btn>
+    </template>
     <v-toolbar-items class="hidden-sm-and-down">
       <template v-if="started">
         <v-btn flat @click="search">
@@ -45,6 +47,9 @@ export default {
         this.$store.commit("setStart", false);
       }
       return this.$store.getters.getStart;
+    },
+    onStartPage() {
+      return this.$route.name == "home";
     },
     showSearchCount() {
       return this.seriesCount !== 0 && this.$route.name == "search";
