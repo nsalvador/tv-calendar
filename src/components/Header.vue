@@ -3,9 +3,30 @@
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-spacer></v-spacer>
     <template v-if="!onStartPage">
-      <v-btn icon class="hidden-md-and-up">
-        <v-icon>more_vert</v-icon>
-      </v-btn>
+      <v-menu class="hidden-md-and-up" full-width>
+        <v-btn icon slot="activator">
+          <v-icon>more_vert</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile @click="search">
+            <v-list-tile-title>Search</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="subscriptions">
+            <v-list-tile-title>
+              <v-badge left>
+                <span v-if="showSubscriptionsCount" slot="badge">{{ subscriptionsCount }}</span>
+                Subscribed
+              </v-badge>
+            </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="calendar">
+            <v-list-tile-title>Calendar</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="done">
+            <v-list-tile-title>Done</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </template>
     <v-toolbar-items class="hidden-sm-and-down">
       <template v-if="started">
