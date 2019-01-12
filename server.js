@@ -1,4 +1,6 @@
-require('./config');
+if (process.env.NODE_ENV !== 'production') {
+  require('./config');
+}
 
 const express = require("express");
 const app = express();
