@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('./config');
-}
+if (process.env.NODE_ENV !== 'production') { require('./config'); }
 
 const express = require("express");
 const app = express();
@@ -72,7 +70,6 @@ function getDayOfWeek(item) {
       item.airsDayOfWeek = response.data.data.airsDayOfWeek;
       resolve();
     } catch (error) {
-      console.log(error);
       reject({
         data: { message: error.response.data.Error }
       });
@@ -217,6 +214,11 @@ app.delete("/show", (req, res) => {
 
 app.use(express.static(path.join(__dirname, "/dist")));
 
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`);
+  });
+}
+else {
+  app.listen(port);
+}
