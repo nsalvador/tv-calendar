@@ -5,10 +5,14 @@
       <v-btn flat @click="snackbar=false">Close</v-btn>
     </v-snackbar>
     <v-layout column align-center>
-      <v-select :items="days" @change="search" class="hidden-md-and-up" label="Select a Day"></v-select>
+      <v-container>
+        <v-select :items="days" @change="search" class="hidden-md-and-up" label="Select a Day"></v-select>
+      </v-container>
+
       <v-radio-group row v-model="row" @change="search" class="hidden-sm-and-down">
         <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
       </v-radio-group>
+
       <v-container grid-list-md class="px-0" fill-height>
         <v-layout row wrap>
           <v-flex v-show="loaded">
