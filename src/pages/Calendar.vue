@@ -23,8 +23,6 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <!-- <v-flex> -->
-      <!-- </v-flex> -->
     </v-layout>
   </v-container>
 </template>
