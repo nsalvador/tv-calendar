@@ -4,28 +4,27 @@
       <span class="subheading">{{ message }}</span>
       <v-btn flat @click="snackbar=false">Close</v-btn>
     </v-snackbar>
-    <v-layout column>
-      <v-flex>
-        <v-radio-group row v-model="row" @change="search">
-          <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
-        </v-radio-group>
-      </v-flex>
-      <v-flex>
-        <v-container grid-list-md class="px-0" fill-height>
-          <v-layout row wrap>
-            <v-flex v-show="loaded">
-              <app-spinner v-show="loaded"></app-spinner>
-            </v-flex>
-            <v-flex v-for="(value, key) in subscriptions" :key="key" xs3>
-              <app-image :series="value">
-                <template slot="subscriptions-image">
-                  <v-img :src="value.posterUrl" contain aspect-ratio="0.68" class="img"/>
-                </template>
-              </app-image>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-flex>
+    <v-layout column align-center>
+      <v-select :items="days" @change="search" class="hidden-md-and-up" label="Select a Day"></v-select>
+      <v-radio-group row v-model="row" @change="search" class="hidden-sm-and-down">
+        <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
+      </v-radio-group>
+      <v-container grid-list-md class="px-0" fill-height>
+        <v-layout row wrap>
+          <v-flex v-show="loaded">
+            <app-spinner v-show="loaded"></app-spinner>
+          </v-flex>
+          <v-flex v-for="(value, key) in subscriptions" :key="key" xs3>
+            <app-image :series="value">
+              <template slot="subscriptions-image">
+                <v-img :src="value.posterUrl" contain aspect-ratio="0.68" class="img"/>
+              </template>
+            </app-image>
+          </v-flex>
+        </v-layout>
+      </v-container>
+      <!-- <v-flex> -->
+      <!-- </v-flex> -->
     </v-layout>
   </v-container>
 </template>
