@@ -5,7 +5,7 @@
       <v-btn flat @click="snackbar=false">Close</v-btn>
     </v-snackbar>
     <v-layout column align-center>
-      <v-container>
+      <v-container class="px-0">
         <v-select :items="days" @change="search" class="hidden-md-and-up" label="Select a Day"></v-select>
       </v-container>
 
