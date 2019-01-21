@@ -1,50 +1,46 @@
 <template>
-  <v-container>
-    <v-snackbar v-model="snackbar" top :timeout="timeout">
-      <span class="subheading">{{ message }}</span>
-      <v-btn flat @click="snackbar=false">Close</v-btn>
-    </v-snackbar>
-
-    <v-layout column align-center>
-      <v-container fluid class="hidden-md-and-up">
+  <v-container grid-list-md>
+    <v-layout>
+      <v-snackbar v-model="snackbar" top :timeout="timeout">
+        <span class="subheading">{{ message }}</span>
+        <v-btn flat @click="snackbar=false">Close</v-btn>
+      </v-snackbar>
+    </v-layout>
+    <v-layout class="hidden-md-and-up">
+      <v-flex>
         <v-select :items="days" @change="search" v-model="row" label="Select a day"></v-select>
-      </v-container>
-
-      <v-container class="hidden-sm-and-down">
+      </v-flex>
+    </v-layout>
+    <v-layout class="hidden-sm-and-down">
+      <v-flex>
         <v-radio-group row v-model="row" @change="search">
           <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
         </v-radio-group>
-      </v-container>
-
-      <v-container fluid grid-list-sm class="hidden-md-and-up">
-        <v-layout row wrap>
-          <v-flex v-show="loaded">
-            <app-spinner v-show="loaded"></app-spinner>
-          </v-flex>
-          <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
-            <app-image :series="series">
-              <template slot="subscriptions-image">
-                <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
-              </template>
-            </app-image>
-          </v-flex>
-        </v-layout>
-      </v-container>
-
-      <v-container grid-list-md class="hidden-sm-and-down" fill-height>
-        <v-layout row wrap>
-          <v-flex v-show="loaded">
-            <app-spinner v-show="loaded"></app-spinner>
-          </v-flex>
-          <v-flex v-for="(value, key) in subscriptions" :key="key" xs3>
-            <app-image :series="value">
-              <template slot="subscriptions-image">
-                <v-img :src="value.posterUrl" contain aspect-ratio="0.68" class="img"/>
-              </template>
-            </app-image>
-          </v-flex>
-        </v-layout>
-      </v-container>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap class="hidden-md-and-up">
+      <v-flex v-show="loaded">
+        <app-spinner/>
+      </v-flex>
+      <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
+        <app-image :series="series">
+          <template slot="subscriptions-image">
+            <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
+          </template>
+        </app-image>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap class="hidden-sm-and-down">
+      <v-flex v-show="loaded">
+        <app-spinner/>
+      </v-flex>
+      <v-flex v-for="(value, key) in subscriptions" :key="key" xs3>
+        <app-image :series="value">
+          <template slot="subscriptions-image">
+            <v-img :src="value.posterUrl" contain aspect-ratio="0.68" class="img"/>
+          </template>
+        </app-image>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>

@@ -1,11 +1,12 @@
 <template>
-  <v-container>
-    <v-snackbar v-model="snackbar" top :timeout="timeout">
-      <span class="subheading">{{ message }}</span>
-      <v-btn flat @click="snackbar=false">Close</v-btn>
-    </v-snackbar>
-
-    <v-layout column>
+  <v-container grid-list-md>
+    <v-layout>
+      <v-snackbar v-model="snackbar" top :timeout="timeout">
+        <span class="subheading">{{ message }}</span>
+        <v-btn flat @click="snackbar=false">Close</v-btn>
+      </v-snackbar>
+    </v-layout>
+    <v-layout>
       <v-flex>
         <v-toolbar>
           <v-text-field
@@ -17,47 +18,41 @@
           ></v-text-field>
         </v-toolbar>
       </v-flex>
-
-      <v-flex class="hidden-md-and-up">
-        <v-container fluid grid-list-sm class="px-0">
-          <app-spinner v-show="loaded"/>
-          <v-layout wrap>
-            <v-flex v-for="(item, index) in series" :key="index" sm6>
-              <app-image :series="item">
-                <template slot="search-image">
-                  <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
-                </template>
-                <template slot="search-button">
-                  <v-btn small icon @click="subscribe(item, index)">
-                    <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
-                    <v-icon title="Unsubscribe" v-else>remove</v-icon>
-                  </v-btn>
-                </template>
-              </app-image>
-            </v-flex>
-          </v-layout>
-        </v-container>
+    </v-layout>
+    <v-layout row wrap class="hidden-md-and-up">
+      <v-flex v-show="loaded">
+        <app-spinner/>
       </v-flex>
-
-      <v-flex class="hidden-sm-and-down">
-        <v-container fluid class="px-0" grid-list-md>
-          <app-spinner v-show="loaded"/>
-          <v-layout wrap>
-            <v-flex v-for="(item, index) in series" :key="index" md3>
-              <app-image :series="item">
-                <template slot="search-image">
-                  <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
-                </template>
-                <template slot="search-button">
-                  <v-btn small icon @click="subscribe(item, index)">
-                    <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
-                    <v-icon title="Unsubscribe" v-else>remove</v-icon>
-                  </v-btn>
-                </template>
-              </app-image>
-            </v-flex>
-          </v-layout>
-        </v-container>
+      <v-flex v-for="(item, index) in series" :key="index" xs6>
+        <app-image :series="item">
+          <template slot="search-image">
+            <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
+          </template>
+          <template slot="search-button">
+            <v-btn small icon @click="subscribe(item, index)">
+              <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
+              <v-icon title="Unsubscribe" v-else>remove</v-icon>
+            </v-btn>
+          </template>
+        </app-image>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap class="hidden-sm-and-down">
+      <v-flex v-show="loaded">
+        <app-spinner/>
+      </v-flex>
+      <v-flex v-for="(item, index) in series" :key="index" xs3>
+        <app-image :series="item">
+          <template slot="search-image">
+            <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
+          </template>
+          <template slot="search-button">
+            <v-btn small icon @click="subscribe(item, index)">
+              <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
+              <v-icon title="Unsubscribe" v-else>remove</v-icon>
+            </v-btn>
+          </template>
+        </app-image>
       </v-flex>
     </v-layout>
   </v-container>

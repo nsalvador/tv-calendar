@@ -1,10 +1,11 @@
 <template>
   <v-container grid-list-md>
-    <v-snackbar v-model="snackbar" top :timeout="timeout">
-      <span class="subheading">{{ message }}</span>
-      <v-btn flat @click="snackbar=false">Close</v-btn>
-    </v-snackbar>
-
+    <v-layout>
+      <v-snackbar v-model="snackbar" top :timeout="timeout">
+        <span class="subheading">{{ message }}</span>
+        <v-btn flat @click="snackbar=false">Close</v-btn>
+      </v-snackbar>
+    </v-layout>
     <v-layout row wrap class="hidden-md-and-up">
       <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
         <app-image :series="series">
@@ -14,8 +15,6 @@
         </app-image>
       </v-flex>
     </v-layout>
-
-    <div class="display-1 mb-2 hidden-sm-and-down">{{ page }}</div>
     <v-layout row wrap class="hidden-sm-and-down">
       <v-flex v-for="(series, index) in subscriptions" :key="index" xs3>
         <app-image :series="series">
