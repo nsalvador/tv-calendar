@@ -6,7 +6,7 @@
     </v-snackbar>
 
     <v-layout column align-center>
-      <v-container class="hidden-md-and-up">
+      <v-container fluid class="hidden-md-and-up">
         <v-select :items="days" @change="search" v-model="row" label="Select a day"></v-select>
       </v-container>
 
@@ -16,7 +16,7 @@
         </v-radio-group>
       </v-container>
 
-      <v-container grid-list-sm class="hidden-md-and-up">
+      <v-container fluid grid-list-sm class="hidden-md-and-up">
         <v-layout row wrap>
           <v-flex v-show="loaded">
             <app-spinner v-show="loaded"></app-spinner>
@@ -24,7 +24,7 @@
           <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
             <app-image :series="series">
               <template slot="subscriptions-image">
-                <v-img :src="series.posterUrl" aspect-ratio="1" class="img"></v-img>
+                <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
               </template>
             </app-image>
           </v-flex>
