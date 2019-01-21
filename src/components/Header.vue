@@ -15,7 +15,7 @@
             <v-list-tile-title>
               <v-badge left>
                 <span v-if="showSubscriptionsCount" slot="badge">{{ subscriptionsCount }}</span>
-                Subscribed
+                Subscriptions
               </v-badge>
             </v-list-tile-title>
           </v-list-tile>
@@ -39,7 +39,7 @@
         <v-btn flat @click="subscriptions">
           <v-badge>
             <span v-if="showSubscriptionsCount" slot="badge">{{ subscriptionsCount }}</span>
-            Subscribed
+            Subscriptions
           </v-badge>
         </v-btn>
         <v-btn flat @click="calendar">

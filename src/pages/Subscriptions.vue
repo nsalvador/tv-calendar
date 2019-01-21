@@ -4,21 +4,21 @@
       <span class="subheading">{{ message }}</span>
       <v-btn flat @click="snackbar=false">Close</v-btn>
     </v-snackbar>
-
-    <v-layout row wrap>
-      <v-flex 
-        v-for="(series, index) in subscriptions" 
-        :key="index"
-        xs3
-      >
+    <v-layout row wrap class="hidden-md-and-up">
+      <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
         <app-image :series="series">
           <template slot="subscriptions-image">
-            <v-img
-              :src="series.posterUrl"
-              contain
-              aspect-ratio="0.68"
-              class="img"
-            />
+            <v-img :src="series.posterUrl" contain aspect-ratio="1" class="img"></v-img>
+          </template>
+        </app-image>
+      </v-flex>
+    </v-layout>
+    <div class="display-1 mb-2 hidden-sm-and-down">{{ page }}</div>
+    <v-layout row wrap class="hidden-sm-and-down">
+      <v-flex v-for="(series, index) in subscriptions" :key="index" xs3>
+        <app-image :series="series">
+          <template slot="subscriptions-image">
+            <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"/>
           </template>
           <template slot="subscriptions-button">
             <v-btn small icon @click="remove(series)">
@@ -26,49 +26,51 @@
             </v-btn>
           </template>
         </app-image>
-        
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import appImage from '../components/Image.vue';
+import appImage from "../components/Image.vue";
 
 export default {
   components: {
     appImage
   },
-  data () {
+  data() {
     return {
       snackbar: false,
-      message: '',
+      message: "",
       timeout: 2500,
-    }
+      page: "Subscriptions"
+    };
   },
   methods: {
-    async remove ( data )  {
+    async remove(data) {
       try {
-        await this.$store.dispatch( 'unsubscribe', {
-          url: '/show', method: 'delete', data
+        await this.$store.dispatch("unsubscribe", {
+          url: "/show",
+          method: "delete",
+          data
         });
-        let response = await this.$store.dispatch( 'getSubscriptions', {
-          url: '/shows', method: 'get'
+        let response = await this.$store.dispatch("getSubscriptions", {
+          url: "/shows",
+          method: "get"
         });
-        this.$store.commit( 'setSubscriptions', response.data.data );
-      }
-      catch( error ){
-        this.message = 'Something happened!';
+        this.$store.commit("setSubscriptions", response.data.data);
+      } catch (error) {
+        this.message = "Something happened!";
         this.snackbar = true;
       }
-    },
-  },
-  computed: {
-    subscriptions () {
-      return this.$store.getters.getSubscriptions;
     }
   },
-}
+  computed: {
+    subscriptions() {
+      return this.$store.getters.getSubscriptions;
+    }
+  }
+};
 </script>
 
 

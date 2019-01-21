@@ -4,16 +4,38 @@
       <span class="subheading">{{ message }}</span>
       <v-btn flat @click="snackbar=false">Close</v-btn>
     </v-snackbar>
+
     <v-layout column align-center>
       <v-container class="px-0">
-        <v-select :items="days" @change="search" class="hidden-md-and-up" label="Select a Day"></v-select>
+        <v-select
+          :items="days"
+          @change="search"
+          v-model="row"
+          class="hidden-md-and-up"
+          label="Select a day"
+        ></v-select>
       </v-container>
 
       <v-radio-group row v-model="row" @change="search" class="hidden-sm-and-down">
         <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
       </v-radio-group>
 
-      <v-container grid-list-md class="px-0" fill-height>
+      <v-container grid-list-sm class="hidden-md-and-up">
+        <v-layout row wrap>
+          <v-flex v-show="loaded">
+            <app-spinner v-show="loaded"></app-spinner>
+          </v-flex>
+          <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
+            <app-image :series="series">
+              <template slot="subscriptions-image">
+                <v-img :src="series.posterUrl" contain aspect-ratio="1" class="img"></v-img>
+              </template>
+            </app-image>
+          </v-flex>
+        </v-layout>
+      </v-container>
+
+      <v-container grid-list-md class="hidden-sm-and-down" fill-height>
         <v-layout row wrap>
           <v-flex v-show="loaded">
             <app-spinner v-show="loaded"></app-spinner>
@@ -44,7 +66,7 @@ export default {
   data() {
     return {
       loaded: false,
-      row: null,
+      row: "",
       snackbar: false,
       timeout: 2500,
       message: "",
