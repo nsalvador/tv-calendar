@@ -4,7 +4,7 @@
     <v-spacer></v-spacer>
     <template v-if="!onStartPage">
       <v-menu class="hidden-md-and-up" full-width>
-        <v-btn icon slot="activator">
+        <v-btn icon slot="activator" left>
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
