@@ -8,7 +8,7 @@
       <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
         <app-image :series="series">
           <template slot="subscriptions-image">
-            <v-img :src="series.posterUrl" contain aspect-ratio="1" class="img"></v-img>
+            <v-img :src="series.posterUrl" aspect-ratio="1" class="img"></v-img>
           </template>
         </app-image>
       </v-flex>
