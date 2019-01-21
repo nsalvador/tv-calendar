@@ -6,19 +6,15 @@
     </v-snackbar>
 
     <v-layout column align-center>
-      <v-container class="px-0">
-        <v-select
-          :items="days"
-          @change="search"
-          v-model="row"
-          class="hidden-md-and-up"
-          label="Select a day"
-        ></v-select>
+      <v-container class="hidden-md-and-up">
+        <v-select :items="days" @change="search" v-model="row" label="Select a day"></v-select>
       </v-container>
 
-      <v-radio-group row v-model="row" @change="search" class="hidden-sm-and-down">
-        <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
-      </v-radio-group>
+      <v-container class="hidden-sm-and-down">
+        <v-radio-group row v-model="row" @change="search">
+          <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
+        </v-radio-group>
+      </v-container>
 
       <v-container grid-list-sm class="hidden-md-and-up">
         <v-layout row wrap>
@@ -28,7 +24,7 @@
           <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
             <app-image :series="series">
               <template slot="subscriptions-image">
-                <v-img :src="series.posterUrl" contain aspect-ratio="1" class="img"></v-img>
+                <v-img :src="series.posterUrl" aspect-ratio="1" class="img"></v-img>
               </template>
             </app-image>
           </v-flex>
