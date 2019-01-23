@@ -25,11 +25,11 @@
         <app-spinner/>
       </v-flex>
       <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
-        <app-image :series="series">
+        <app-image-2 :series="series">
           <template slot="subscriptions-image">
             <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
           </template>
-        </app-image>
+        </app-image-2>
       </v-flex>
     </v-layout>
     <v-layout row wrap class="hidden-sm-and-down">
@@ -49,6 +49,7 @@
 
 <script>
 import appImage from "../components/Image.vue";
+import appImage2 from "../components/Image-2.vue";
 import appSpinner from "../components/Spinner.vue";
 
 export default {
@@ -77,6 +78,7 @@ export default {
   },
   components: {
     appImage,
+    "app-image-2": appImage2,
     appSpinner
   },
   methods: {

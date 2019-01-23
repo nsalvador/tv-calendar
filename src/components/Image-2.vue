@@ -1,20 +1,12 @@
 <template>
   <v-card flat tile>
     <v-responsive>
-      <div class="card">
-        <slot name="search-image"/>
-        <slot name="subscriptions-image"/>
-        <slot name="search-overview"/>
+      <slot name="subscriptions-image"/>
     </v-responsive>
     <v-card-actions>
       <span class="ellipsis" :title="series.seriesName">{{ series.seriesName }}</span>
       <v-spacer></v-spacer>
-      <v-dialog
-        fullscreen
-        hide-overlay
-        v-model="dialog"
-        transition="dialog-bottom-transition"
-      >
+      <v-dialog fullscreen hide-overlay v-model="dialog" transition="dialog-bottom-transition">
         <v-btn icon small slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>
@@ -42,7 +34,7 @@ export default {
   data() {
     return {
       dialog: false
-    }
+    };
   }
 };
 </script>
