@@ -4,6 +4,7 @@
       <div class="card">
         <slot name="search-image"/>
         <slot name="subscriptions-image"/>
+        <slot name="search-overview"/>
         <div class="overview">
           <h3>{{ series.seriesName }}</h3>
           <p>{{ series.overview }}</p>

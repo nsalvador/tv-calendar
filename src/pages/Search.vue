@@ -51,7 +51,6 @@
               <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
               <v-icon title="Unsubscribe" v-else>remove</v-icon>
             </v-btn>
-          </template>
         </app-image>
       </v-flex>
     </v-layout>

@@ -1,6 +1,9 @@
 <template>
   <v-toolbar app>
     <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-container v-if="showTitle" class="hidden-md-and-up">
+      <div class="text-xs-center title">{{ title }}</div>
+    </v-container>
     <v-spacer></v-spacer>
     <template v-if="!onStartPage">
       <v-menu class="hidden-md-and-up" full-width>
@@ -22,8 +25,8 @@
           <v-list-tile @click="calendar">
             <v-list-tile-title>Calendar</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="done">
-            <v-list-tile-title>Done</v-list-tile-title>
+          <v-list-tile @click="finish">
+            <v-list-tile-title>Finish</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -48,7 +51,7 @@
             Calendar
           </v-badge>
         </v-btn>
-        <v-btn flat @click="done">Done</v-btn>
+        <v-btn flat @click="finish">Finish</v-btn>
       </template>
     </v-toolbar-items>
   </v-toolbar>
@@ -72,6 +75,13 @@ export default {
     onStartPage() {
       return this.$route.name == "home";
     },
+    showTitle() {
+      return this.title !== "Home";
+    },
+    title() {
+      const page = this.$route.name;
+      return page.charAt(0).toUpperCase() + page.slice(1);
+    },
     showSearchCount() {
       return this.seriesCount !== 0 && this.$route.name == "search";
     },
@@ -89,7 +99,7 @@ export default {
     }
   },
   methods: {
-    done() {
+    finish() {
       router.push({ name: "home" });
       this.$store.commit("setStart", false);
       sessionStorage.removeItem("start");

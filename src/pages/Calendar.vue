@@ -1,10 +1,12 @@
 <template>
   <v-container grid-list-md>
     <v-layout>
-      <v-snackbar v-model="snackbar" top :timeout="timeout">
-        <span class="subheading">{{ message }}</span>
-        <v-btn flat @click="snackbar=false">Close</v-btn>
-      </v-snackbar>
+      <v-flex>
+        <v-snackbar v-model="snackbar" top :timeout="timeout">
+          <span class="subheading">{{ message }}</span>
+          <v-btn flat @click="snackbar=false">Close</v-btn>
+        </v-snackbar>
+      </v-flex>
     </v-layout>
     <v-layout class="hidden-md-and-up">
       <v-flex>
