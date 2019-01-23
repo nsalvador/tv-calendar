@@ -12,31 +12,6 @@
           <template slot="subscriptions-image">
             <v-img :src="series.posterUrl" aspect-ratio="0.68" contain class="img"/>
           </template>
-          <template slot="subscriptions-button">
-            <v-dialog
-              fullscreen
-              hide-overlay
-              v-model="dialog"
-              transition="dialog-bottom-transition"
-            >
-              <v-btn icon small slot="activator">
-                <v-icon>more_vert</v-icon>
-              </v-btn>
-              <v-card>
-                <v-toolbar>
-                  <v-btn icon @click="dialog=false">
-                    <v-icon>close</v-icon>
-                  </v-btn>
-                </v-toolbar>
-                <v-card-title>
-                  <h3 class="headline mb-0">{{ series.seriesName }}</h3>
-                </v-card-title>
-                <v-card-text>
-                  <div>{{ series.overview }}</div>
-                </v-card-text>
-              </v-card>
-            </v-dialog>
-          </template>
         </app-image-2>
       </v-flex>
     </v-layout>
@@ -71,8 +46,7 @@ export default {
       snackbar: false,
       message: "",
       timeout: 2500,
-      page: "Subscriptions",
-      dialog: false
+      page: "Subscriptions"
     };
   },
   methods: {
