@@ -19,7 +19,7 @@
               v-model="dialog"
               transition="dialog-bottom-transition"
             >
-              <v-btn icon small left slot="activator">
+              <v-btn icon small slot="activator">
                 <v-icon>more_vert</v-icon>
               </v-btn>
               <v-card>
