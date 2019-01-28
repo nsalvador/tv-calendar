@@ -12,6 +12,11 @@
           <template slot="subscriptions-image">
             <v-img :src="series.posterUrl" aspect-ratio="0.68" contain class="img"/>
           </template>
+          <template slot="subscriptions-button">
+            <v-btn small @click="remove(series)">
+              <span>Unsubscribe</span>
+            </v-btn>
+          </template>
         </app-image-2>
       </v-flex>
     </v-layout>
@@ -52,10 +57,13 @@ export default {
   methods: {
     async remove(data) {
       try {
+        let show = data;
+        show.id = Number(data._id);
+        delete data._id;
         await this.$store.dispatch("unsubscribe", {
           url: "/show",
           method: "delete",
-          data
+          data: show
         });
         let response = await this.$store.dispatch("getSubscriptions", {
           url: "/shows",

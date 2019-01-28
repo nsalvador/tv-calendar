@@ -187,12 +187,13 @@ app.get("/shows/:day", (req, res) => {
 
 app.delete("/show", (req, res) => {
   let show = req.body;
+  // console.log(show);
   MongoClient.connect(
     MONGODB_URI,
     (error, db) => {
       try {
         if (error) throw error;
-        db.collection("subscriptions").deleteOne({ _id: show._id }, error => {
+        db.collection("subscriptions").deleteOne({ _id: show.id.toString() }, error => {
           if (error) throw error;
           s3.deleteObject(
             {

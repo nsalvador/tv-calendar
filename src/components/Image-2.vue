@@ -17,11 +17,20 @@
             </v-btn>
           </v-toolbar>
           <v-card-title>
-            <h3 class="headline mb-0">{{ series.seriesName }}</h3>
+            <div class="headline mb-0">{{ series.seriesName }}</div>
           </v-card-title>
           <v-card-text>
-            <div>{{ series.overview }}</div>
+            <h3>Overview:</h3>
+            <p>{{ series.overview }}</p>
+            <h3>Air Date:</h3>
+            <p>{{ series.airsDayOfWeek }}</p>
+            <h3>Status:</h3>
+            <p>{{ series.status }}</p>
           </v-card-text>
+          <v-card-actions>
+            <slot name="search-button"></slot>
+            <slot name="subscriptions-button"></slot>
+          </v-card-actions>
         </v-card>
       </v-dialog>
     </v-card-actions>

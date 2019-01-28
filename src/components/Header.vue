@@ -2,7 +2,12 @@
   <v-toolbar app>
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-container v-if="showTitle" class="hidden-md-and-up">
-      <div class="text-xs-center title">{{ title }}</div>
+      <div class="text-xs-center title">
+        <v-badge>
+          <span slot="badge" v-if="showBadge">{{ badgeNumber }}</span>
+          {{ title }}
+        </v-badge>
+      </div>
     </v-container>
     <v-spacer></v-spacer>
     <template v-if="!onStartPage">
@@ -15,12 +20,7 @@
             <v-list-tile-title>Search</v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="subscriptions">
-            <v-list-tile-title>
-              <v-badge left>
-                <span v-if="showSubscriptionsCount" slot="badge">{{ subscriptionsCount }}</span>
-                Subscriptions
-              </v-badge>
-            </v-list-tile-title>
+            <v-list-tile-title>Subscriptions</v-list-tile-title>
           </v-list-tile>
           <v-list-tile @click="calendar">
             <v-list-tile-title>Calendar</v-list-tile-title>
@@ -77,6 +77,24 @@ export default {
     },
     showTitle() {
       return this.title !== "Home";
+    },
+    badgeNumber() {
+      switch (this.$route.name) {
+        case "subscriptions":
+          return this.subscriptionsCount;
+        default:
+          return this.seriesCount;
+      }
+    },
+    showBadge() {
+      switch (this.$route.name) {
+        case "search":
+          return this.showSearchCount;
+        case "calendar":
+          return this.showCalendarCount;
+        case "subscriptions":
+          return this.showSubscriptionsCount;
+      }
     },
     title() {
       const page = this.$route.name;

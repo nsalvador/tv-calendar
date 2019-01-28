@@ -24,17 +24,17 @@
         <app-spinner/>
       </v-flex>
       <v-flex v-for="(item, index) in series" :key="index" xs6>
-        <app-image :series="item">
-          <template slot="search-image">
-            <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
+        <app-image-2 :series="item">
+          <template slot="subscriptions-image">
+            <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
           </template>
           <template slot="search-button">
-            <v-btn small icon @click="subscribe(item, index)">
-              <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
-              <v-icon title="Unsubscribe" v-else>remove</v-icon>
+            <v-btn small @click="subscribe(item, index)">
+              <span v-if="!isSubscribed(index)">Subscribe</span>
+              <span v-else>Unsubscribe</span>
             </v-btn>
           </template>
-        </app-image>
+        </app-image-2>
       </v-flex>
     </v-layout>
     <v-layout row wrap class="hidden-sm-and-down">
@@ -51,6 +51,7 @@
               <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
               <v-icon title="Unsubscribe" v-else>remove</v-icon>
             </v-btn>
+          </template>
         </app-image>
       </v-flex>
     </v-layout>
@@ -59,12 +60,14 @@
 
 <script>
 import appImage from "../components/Image.vue";
+import appImage2 from "../components/Image-2.vue";
 import appSpinner from "../components/Spinner.vue";
 
 export default {
   components: {
     appImage,
-    appSpinner
+    appSpinner,
+    "app-image-2": appImage2
   },
   data() {
     return {
@@ -104,8 +107,9 @@ export default {
         } else {
           this.$delete(this.selected, index);
           await this.$store.dispatch("unsubscribe", {
-            url: `/show/${data.id.toString()}`,
-            method: "delete"
+            url: "/show",
+            method: "delete",
+            data
           });
           let response = await this.$store.dispatch("getSubscriptions", {
             url: "/shows",
