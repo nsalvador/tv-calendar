@@ -57,13 +57,12 @@ export default {
   methods: {
     async remove(data) {
       try {
-        let show = data;
-        show.id = Number(data._id);
+        data.id = Number(data._id);
         delete data._id;
         await this.$store.dispatch("unsubscribe", {
           url: "/show",
           method: "delete",
-          data: show
+          data
         });
         let response = await this.$store.dispatch("getSubscriptions", {
           url: "/shows",
