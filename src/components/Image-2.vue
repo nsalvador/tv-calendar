@@ -15,6 +15,11 @@
             <v-btn icon @click="dialog=false">
               <v-icon>close</v-icon>
             </v-btn>
+            <v-spacer></v-spacer>
+            <v-toolbar-items @click="dialog=false">
+              <slot name="search-button"></slot>
+              <slot name="subscriptions-button"></slot>
+            </v-toolbar-items>
           </v-toolbar>
           <v-card-title>
             <div class="headline mb-0">{{ series.seriesName }}</div>
@@ -27,10 +32,6 @@
             <h3>Status:</h3>
             <p>{{ series.status }}</p>
           </v-card-text>
-          <v-card-actions>
-            <slot name="search-button"></slot>
-            <slot name="subscriptions-button"></slot>
-          </v-card-actions>
         </v-card>
       </v-dialog>
     </v-card-actions>

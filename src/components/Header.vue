@@ -17,16 +17,24 @@
         </v-btn>
         <v-list>
           <v-list-tile @click="search">
-            <v-list-tile-title>Search</v-list-tile-title>
+            <v-list-tile-content>
+              <v-list-tile-title>Search</v-list-tile-title>
+            </v-list-tile-content>
           </v-list-tile>
           <v-list-tile @click="subscriptions">
-            <v-list-tile-title>Subscriptions</v-list-tile-title>
+            <v-list-tile-content>
+              <v-list-tile-title>Subscriptions</v-list-tile-title>
+            </v-list-tile-content>
           </v-list-tile>
           <v-list-tile @click="calendar">
-            <v-list-tile-title>Calendar</v-list-tile-title>
+            <v-list-tile-content>
+              <v-list-tile-title>Calendar</v-list-tile-title>
+            </v-list-tile-content>
           </v-list-tile>
           <v-list-tile @click="finish">
-            <v-list-tile-title>Finish</v-list-tile-title>
+            <v-list-tile-content>
+              <v-list-tile-title>Finish</v-list-tile-title>
+            </v-list-tile-content>
           </v-list-tile>
         </v-list>
       </v-menu>
