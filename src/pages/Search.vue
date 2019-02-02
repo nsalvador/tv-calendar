@@ -25,17 +25,15 @@
       </v-flex>
       <v-flex v-for="(item, index) in series" :key="index" xs6>
         <app-image-2 :series="item">
-          <v-img
-            :src="getImage(item)"
-            aspect-ratio="0.68"
-            contain
-            class="img"
-            slot="subscriptions-image"
-          />
-          <v-btn flat @click="subscribe(item, index)" slot="search-button">
-            <span v-if="!isSubscribed(index)">Subscribe</span>
-            <span v-else>Unsubscribe</span>
-          </v-btn>
+          <template slot="subscriptions-image">
+            <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
+          </template>
+          <template slot="search-button">
+            <v-btn flat @click="subscribe(item, index)">
+              <span v-if="!isSubscribed(index)">Subscribe</span>
+              <span v-else>Unsubscribe</span>
+            </v-btn>
+          </template>
         </app-image-2>
       </v-flex>
     </v-layout>
@@ -45,11 +43,15 @@
       </v-flex>
       <v-flex v-for="(item, index) in series" :key="index" xs3>
         <app-image :series="item">
-          <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img" slot="search-image"/>
-          <v-btn small icon @click="subscribe(item, index)" slot="search-button">
-            <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
-            <v-icon title="Unsubscribe" v-else>remove</v-icon>
-          </v-btn>
+          <template slot="search-image">
+            <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
+          </template>
+          <template slot="search-button">
+            <v-btn small icon @click="subscribe(item, index)">
+              <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
+              <v-icon title="Unsubscribe" v-else>remove</v-icon>
+            </v-btn>
+          </template>
         </app-image>
       </v-flex>
     </v-layout>
