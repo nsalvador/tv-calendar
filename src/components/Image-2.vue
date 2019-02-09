@@ -8,22 +8,23 @@
       <v-spacer></v-spacer>
       <v-dialog fullscreen hide-overlay v-model="dialog" transition="dialog-bottom-transition">
         <v-btn icon small slot="activator">
-          <v-icon>more_vert</v-icon>
+          <v-icon>info</v-icon>
         </v-btn>
         <v-card>
           <v-toolbar>
             <v-btn icon @click="dialog=false">
               <v-icon>close</v-icon>
             </v-btn>
+            <v-container>
+              <div class="text-xs-center title">{{ series.seriesName }}</div>
+            </v-container>
             <v-spacer></v-spacer>
             <v-toolbar-items @click="dialog=false">
               <slot name="search-button"></slot>
               <slot name="subscriptions-button"></slot>
+              <slot name="calendar-button"></slot>
             </v-toolbar-items>
           </v-toolbar>
-          <v-card-title>
-            <div class="headline mb-0">{{ series.seriesName }}</div>
-          </v-card-title>
           <v-card-text>
             <h3>Overview:</h3>
             <p>{{ series.overview }}</p>

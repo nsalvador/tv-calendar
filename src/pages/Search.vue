@@ -29,9 +29,9 @@
             <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
           </template>
           <template slot="search-button">
-            <v-btn flat @click="subscribe(item, index)">
-              <span v-if="!isSubscribed(index)">Subscribe</span>
-              <span v-else>Unsubscribe</span>
+            <v-btn flat icon @click="subscribe(item, index)">
+              <v-icon v-if="!isSubscribed(index)">add</v-icon>
+              <v-icon v-else>remove</v-icon>
             </v-btn>
           </template>
         </app-image-2>
@@ -100,7 +100,7 @@ export default {
             data
           });
           let response = await this.$store.dispatch("getSubscriptions", {
-            url: "/shows",
+            url: "/show",
             method: "get"
           });
           await this.$store.commit("setSubscriptions", response.data.data);
@@ -112,7 +112,7 @@ export default {
             data
           });
           let response = await this.$store.dispatch("getSubscriptions", {
-            url: "/shows",
+            url: "/show",
             method: "get"
           });
           this.$store.commit("setSubscriptions", response.data.data);

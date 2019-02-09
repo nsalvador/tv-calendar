@@ -5,8 +5,9 @@ const API_KEY = process.env.API_KEY;
 module.exports = {
   getDayOfWeek: (item) => {
     return new Promise(async (resolve, reject) => {
+      let response = null;
       try {
-        let response = await axios.post("/login", {
+        response = await axios.post("/login", {
           apikey: API_KEY
         });
         axios.defaults.headers.common["Authorization"] = `Bearer ${
@@ -24,14 +25,15 @@ module.exports = {
   },
   getSource: (item) => {
     return new Promise(async (resolve, reject) => {
+      let [response, count, source] = [3].fill(null);
       try {
-        let response = await axios.get(`/series/${item.id}/images`);
-        let count = response.data.data.poster;
+        response = await axios.get(`/series/${item.id}/images`);
+        count = response.data.data.poster;
         if (count !== 0) {
           response = await axios.get(`/series/${item.id}/images/query`, {
             params: { keyType: "poster" }
           });
-          let source =
+          source =
             response.data.data[Math.floor(Math.random() * count + 1) - 1]
               .fileName;
           item.posterKey = source !== "" ? source.split("/")[1] : "";
@@ -39,7 +41,8 @@ module.exports = {
         } else {
           throw { response: { status: 404 } };
         }
-      } catch (error) {
+      }
+      catch (error) {
         switch (error.response.status) {
           case 404:
             item.posterKey = "";

@@ -13,7 +13,9 @@
             <v-img :src="series.posterUrl" aspect-ratio="0.68" contain class="img"/>
           </template>
           <template slot="subscriptions-button">
-            <v-btn flat @click="remove(series)">Unsubscribe</v-btn>
+            <v-btn flat @click="remove(series)" icon>
+              <v-icon>remove</v-icon>
+            </v-btn>
           </template>
         </app-image-2>
       </v-flex>
@@ -63,7 +65,7 @@ export default {
           data
         });
         let response = await this.$store.dispatch("getSubscriptions", {
-          url: "/shows",
+          url: "/show",
           method: "get"
         });
         this.$store.commit("setSubscriptions", response.data.data);

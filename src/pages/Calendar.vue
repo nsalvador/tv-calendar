@@ -29,6 +29,11 @@
           <template slot="subscriptions-image">
             <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
           </template>
+          <template slot="calendar-button">
+            <v-btn flat icon>
+              <v-icon></v-icon>
+            </v-btn>
+          </template>
         </app-image-2>
       </v-flex>
     </v-layout>
@@ -86,7 +91,7 @@ export default {
       try {
         this.loaded = true;
         this.$store.commit("setSeries", []);
-        const config = { url: `/shows/${day}`, method: "get" };
+        const config = { url: `/show/${day}`, method: "get" };
         let response = await this.$store.dispatch(
           "getSubscriptionsByDay",
           config

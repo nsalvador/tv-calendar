@@ -140,7 +140,7 @@ export default {
   },
   async mounted() {
     try {
-      const config = { url: "/shows", method: "get" };
+      const config = { url: "/show", method: "get" };
       let response = await this.$store.dispatch("getSubscriptions", config);
       this.$store.commit("setSubscriptions", response.data.data);
     } catch (error) {
