@@ -10,14 +10,12 @@
       </div>
     </v-container>
     <v-spacer></v-spacer>
-    <template v-if="!onStartPage">
-      <v-btn icon left v-if="showListIcon" @click="switchView">
-        <v-icon>view_list</v-icon>
+    <v-toolbar-items class="hidden-md-and-up">
+      <v-btn icon left flat @click="switchView" v-if="showButtons">
+        <v-icon v-if="!showListIcon">view_list</v-icon>
+        <v-icon v-else>grid_on</v-icon>
       </v-btn>
-      <v-btn v-else icon left @click="switchView">
-        <v-icon>grid_on</v-icon>
-      </v-btn>
-      <v-menu class="hidden-md-and-up" full-width>
+      <v-menu>
         <v-btn icon slot="activator" left>
           <v-icon>more_vert</v-icon>
         </v-btn>
@@ -36,7 +34,7 @@
           </v-list-tile>
         </v-list>
       </v-menu>
-    </template>
+    </v-toolbar-items>
     <v-toolbar-items class="hidden-sm-and-down">
       <template v-if="started">
         <v-btn flat @click="search">
@@ -81,6 +79,9 @@ export default {
     onStartPage() {
       return this.$route.name == "home";
     },
+    showButtons() {
+      return this.$route.name != "search" && !this.onStartPage;
+    },
     showTitle() {
       return this.title !== "Home";
     },
@@ -96,11 +97,7 @@ export default {
       return this.$store.getters.getIsListView;
     },
     showListIcon() {
-      return this.$route.name != "search" && !this.isListView;
-      // (
-      //   this.$route.name != "search" ||
-      //   (this.isListView && this.$route.name == "search")
-      // );
+      return this.isListView;
     },
     showBadge() {
       switch (this.$route.name) {
@@ -134,8 +131,7 @@ export default {
   },
   methods: {
     switchView() {
-      let isListView = this.$store.getters.getIsListView;
-      this.$store.commit("setIsListView", !isListView);
+      this.$store.commit("setIsListView", !this.$store.getters.getIsListView);
     },
     finish() {
       router.push({ name: "home" });

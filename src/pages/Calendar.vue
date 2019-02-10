@@ -20,7 +20,33 @@
         </v-radio-group>
       </v-flex>
     </v-layout>
-    <v-layout row wrap class="hidden-md-and-up">
+    <v-layout v-if="isListView">
+      <v-flex v-show="loaded">
+        <app-spinner/>
+      </v-flex>
+      <v-flex xs12>
+        <v-list class="py-0">
+          <template v-for="(series, index) in subscriptions">
+            <v-divider :key="index" v-if="index!=0"></v-divider>
+            <v-list-tile :key="index">
+              <v-list-tile-content>
+                <v-list-tile-title v-text="series.seriesName"></v-list-tile-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <app-dialog :series="series">
+                  <template slot="calendar-button">
+                    <v-btn flat icon>
+                      <v-icon></v-icon>
+                    </v-btn>
+                  </template>
+                </app-dialog>
+              </v-list-tile-action>
+            </v-list-tile>
+          </template>
+        </v-list>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap class="hidden-md-and-up" v-else>
       <v-flex v-show="loaded">
         <app-spinner/>
       </v-flex>
@@ -56,11 +82,15 @@
 import appImage from "../components/Image.vue";
 import appImage2 from "../components/Image-2.vue";
 import appSpinner from "../components/Spinner.vue";
+import appDialog from "../components/Dialog.vue";
 
 export default {
   computed: {
     subscriptions() {
       return this.$store.getters.getSeries;
+    },
+    isListView() {
+      return this.$store.getters.getIsListView;
     }
   },
   data() {
@@ -84,7 +114,8 @@ export default {
   components: {
     appImage,
     "app-image-2": appImage2,
-    appSpinner
+    appSpinner,
+    "app-dialog": appDialog
   },
   methods: {
     async search(day) {

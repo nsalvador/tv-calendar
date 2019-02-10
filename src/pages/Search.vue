@@ -84,6 +84,9 @@ export default {
   computed: {
     series() {
       return this.$store.getters.getSeries;
+    },
+    isListView() {
+      return this.$store.getters.getIsListView;
     }
   },
   mounted() {
