@@ -10,7 +10,8 @@ export default new Vuex.Store({
   state: {
     started: false,
     subscriptions: [],
-    series: []
+    series: [],
+    isListView: false
   },
   getters: {
     getStart(state) {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
     },
     getSeries(state) {
       return state.series;
+    },
+    getIsListView(state) {
+      return state.isListView;
     }
   },
   mutations: {
@@ -32,22 +36,25 @@ export default new Vuex.Store({
     },
     setSeries(state, series) {
       state.series = series;
+    },
+    setIsListView(state, value) {
+      state.isListView = value;
     }
   },
   actions: {
-    search({}, config) {
+    search({ }, config) {
       return axios(config);
     },
-    subscribe({}, config) {
+    subscribe({ }, config) {
       return axios(config);
     },
-    unsubscribe({}, config) {
+    unsubscribe({ }, config) {
       return axios(config);
     },
-    getSubscriptions({}, config) {
+    getSubscriptions({ }, config) {
       return axios(config);
     },
-    getSubscriptionsByDay({}, config) {
+    getSubscriptionsByDay({ }, config) {
       return axios(config);
     }
   }

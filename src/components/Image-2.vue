@@ -6,46 +6,28 @@
     <v-card-actions>
       <span class="ellipsis" :title="series.seriesName">{{ series.seriesName }}</span>
       <v-spacer></v-spacer>
-      <v-dialog fullscreen hide-overlay v-model="dialog" transition="dialog-bottom-transition">
-        <v-btn icon small slot="activator">
-          <v-icon>info</v-icon>
-        </v-btn>
-        <v-card>
-          <v-toolbar>
-            <v-btn icon @click="dialog=false">
-              <v-icon>close</v-icon>
-            </v-btn>
-            <v-container>
-              <div class="text-xs-center title">{{ series.seriesName }}</div>
-            </v-container>
-            <v-spacer></v-spacer>
-            <v-toolbar-items @click="dialog=false">
-              <slot name="search-button"></slot>
-              <slot name="subscriptions-button"></slot>
-              <slot name="calendar-button"></slot>
-            </v-toolbar-items>
-          </v-toolbar>
-          <v-card-text>
-            <h3>Overview:</h3>
-            <p>{{ series.overview }}</p>
-            <h3>Air Date:</h3>
-            <p>{{ series.airsDayOfWeek }}</p>
-            <h3>Status:</h3>
-            <p>{{ series.status }}</p>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+      <app-dialog :series="series">
+        <template slot="subscriptions-button">
+          <slot name="subscriptions-button"></slot>
+        </template>
+        <template slot="search-button">
+          <slot name="search-button"/>
+        </template>
+        <template slot="calendar-button">
+          <slot name="calendar-button"></slot>
+        </template>
+      </app-dialog>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import appDialog from "./Dialog.vue";
+
 export default {
   props: ["series"],
-  data() {
-    return {
-      dialog: false
-    };
+  components: {
+    "app-dialog": appDialog
   }
 };
 </script>

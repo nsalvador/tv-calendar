@@ -1,8 +1,8 @@
 <template>
   <v-toolbar app>
     <v-toolbar-side-icon></v-toolbar-side-icon>
-    <v-container v-if="showTitle" class="hidden-md-and-up">
-      <div class="text-xs-center title">
+    <v-container fluid v-if="showTitle" class="hidden-md-and-up">
+      <div class="title">
         <v-badge>
           <span slot="badge" v-if="showBadge">{{ badgeNumber }}</span>
           {{ title }}
@@ -11,6 +11,12 @@
     </v-container>
     <v-spacer></v-spacer>
     <template v-if="!onStartPage">
+      <v-btn icon left v-if="showListIcon" @click="switchView">
+        <v-icon>view_list</v-icon>
+      </v-btn>
+      <v-btn v-else icon left @click="switchView">
+        <v-icon>grid_on</v-icon>
+      </v-btn>
       <v-menu class="hidden-md-and-up" full-width>
         <v-btn icon slot="activator" left>
           <v-icon>more_vert</v-icon>
@@ -86,6 +92,16 @@ export default {
           return this.seriesCount;
       }
     },
+    isListView() {
+      return this.$store.getters.getIsListView;
+    },
+    showListIcon() {
+      return this.$route.name != "search" && !this.isListView;
+      // (
+      //   this.$route.name != "search" ||
+      //   (this.isListView && this.$route.name == "search")
+      // );
+    },
     showBadge() {
       switch (this.$route.name) {
         case "search":
@@ -117,6 +133,10 @@ export default {
     }
   },
   methods: {
+    switchView() {
+      let isListView = this.$store.getters.getIsListView;
+      this.$store.commit("setIsListView", !isListView);
+    },
     finish() {
       router.push({ name: "home" });
       this.$store.commit("setStart", false);
