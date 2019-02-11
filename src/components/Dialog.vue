@@ -19,12 +19,12 @@
         </v-toolbar-items>
       </v-toolbar>
       <v-card-text>
-        <h3>Overview:</h3>
-        <p>{{ series.overview }}</p>
-        <h3>Air Date:</h3>
-        <p>{{ series.airsDayOfWeek }}</p>
-        <h3>Status:</h3>
-        <p>{{ series.status }}</p>
+        <h4>Overview:</h4>
+        <p class="caption">{{ series.overview }}</p>
+        <h4>Air Date:</h4>
+        <p class="caption">{{ series.airsDayOfWeek }}</p>
+        <h4>Status:</h4>
+        <p class="caption">{{ series.status }}</p>
       </v-card-text>
     </v-card>
   </v-dialog>

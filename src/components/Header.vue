@@ -13,9 +13,9 @@
     <v-toolbar-items class="hidden-md-and-up">
       <v-btn icon left flat @click="switchView" v-if="showButtons">
         <v-icon v-if="!showListIcon">view_list</v-icon>
-        <v-icon v-else>grid_on</v-icon>
+        <v-icon v-else small>fas fa-th</v-icon>
       </v-btn>
-      <v-menu>
+      <v-menu v-if="!onStartPage">
         <v-btn icon slot="activator" left>
           <v-icon>more_vert</v-icon>
         </v-btn>
