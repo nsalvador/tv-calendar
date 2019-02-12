@@ -86,12 +86,15 @@ export default {
       return this.title !== "Home";
     },
     badgeNumber() {
+      let value = false;
       switch (this.$route.name) {
         case "subscriptions":
-          return this.subscriptionsCount;
+          value = this.subscriptionsCount;
+          break;
         default:
-          return this.seriesCount;
+          value = this.seriesCount;
       }
+      return value;
     },
     isListView() {
       return this.$store.getters.getIsListView;
@@ -100,14 +103,18 @@ export default {
       return this.isListView;
     },
     showBadge() {
+      let value = false;
       switch (this.$route.name) {
         case "search":
-          return this.showSearchCount;
+          value = this.showSearchCount;
+          break;
         case "calendar":
-          return this.showCalendarCount;
+          value = this.showCalendarCount;
+          break;
         case "subscriptions":
-          return this.showSubscriptionsCount;
+          value = this.showSubscriptionsCount;
       }
+      return value;
     },
     title() {
       const page = this.$route.name;

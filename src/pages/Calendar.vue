@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-md>
+  <v-container grid-list-md class="pt-0">
     <v-layout>
       <v-flex>
         <v-snackbar v-model="snackbar" top :timeout="timeout">
@@ -29,6 +29,9 @@
           <template v-for="(series, index) in subscriptions">
             <v-divider :key="index" v-if="index!=0"></v-divider>
             <v-list-tile :key="index">
+              <v-list-tile-avatar tile>
+                <v-img :src="series.posterUrl"></v-img>
+              </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-title v-text="series.seriesName"></v-list-tile-title>
               </v-list-tile-content>
