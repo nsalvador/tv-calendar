@@ -5,6 +5,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 
 const showRoutes = require('./routes/show');
+const subscriptionsRoutes = require('./routes/subscriptions');
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/show', showRoutes);
+app.use('/subscriptions', subscriptionsRoutes);
 
 app.use(express.static(path.join(__dirname, "/dist")));
 

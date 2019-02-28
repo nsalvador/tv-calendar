@@ -16,7 +16,7 @@
         <v-icon v-else small>fas fa-th</v-icon>
       </v-btn>
       <v-menu v-if="!onStartPage">
-        <v-btn icon slot="activator" left>
+        <v-btn left icon slot="activator">
           <v-icon>more_vert</v-icon>
         </v-btn>
         <v-list>
@@ -163,7 +163,10 @@ export default {
   },
   async mounted() {
     try {
-      const config = { url: "/show", method: "get" };
+      const config = {
+        url: "/subscriptions/all",
+        method: "get"
+      };
       let response = await this.$store.dispatch("getSubscriptions", config);
       this.$store.commit("setSubscriptions", response.data.data);
     } catch (error) {

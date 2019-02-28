@@ -54,8 +54,8 @@ export default new Vuex.Store({
     getSubscriptions({ }, config) {
       return axios(config);
     },
-    getSubscriptionsByDay({ }, config) {
-      return axios(config);
-    }
+    // getSubscriptionsByDay({ }, config) {
+    //   return axios(config);
+    // }
   }
 });

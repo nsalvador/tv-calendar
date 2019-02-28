@@ -24,20 +24,26 @@
         <app-spinner/>
       </v-flex>
       <v-flex v-for="(item, index) in series" :key="index" xs6>
-        <app-image-2 :series="item">
-          <template slot="subscriptions-image">
+        <app-image-mobile :series="item">
+          <template slot="search-image">
             <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
           </template>
           <template slot="search-button">
-            <v-btn flat icon @click="subscribe(item, index)">
+            <v-btn left flat icon @click="subscribe(item, index)">
               <v-icon v-if="!isSubscribed(index)">add</v-icon>
               <v-icon v-else>remove</v-icon>
             </v-btn>
           </template>
-        </app-image-2>
+          <template slot="search-info">
+            <h4>Overview:</h4>
+            <p class="caption">{{ item.overview }}</p>
+            <h4>Status:</h4>
+            <p class="caption">{{ item.status }}</p>
+          </template>
+        </app-image-mobile>
       </v-flex>
     </v-layout>
-    <v-layout row wrap class="hidden-sm-and-down">
+    <!-- <v-layout row wrap class="hidden-sm-and-down">
       <v-flex v-show="loaded">
         <app-spinner/>
       </v-flex>
@@ -47,27 +53,27 @@
             <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
           </template>
           <template slot="search-button">
-            <v-btn small icon @click="subscribe(item, index)">
-              <v-icon title="Subscribe" v-if="!isSubscribed(index)">add</v-icon>
-              <v-icon title="Unsubscribe" v-else>remove</v-icon>
+            <v-btn flat left small icon @click="subscribe(item, index)">
+              <v-icon title="Subscribe" v-if="!isSubscribed(index)" left>add</v-icon>
+              <v-icon title="Unsubscribe" v-else left>remove</v-icon>
             </v-btn>
           </template>
         </app-image>
       </v-flex>
-    </v-layout>
+    </v-layout>-->
   </v-container>
 </template>
 
 <script>
 import appImage from "../components/Image.vue";
-import appImage2 from "../components/Image-2.vue";
+import appImageMobile from "../components/Image-2.vue";
 import appSpinner from "../components/Spinner.vue";
 
 export default {
   components: {
     appImage,
     appSpinner,
-    "app-image-2": appImage2
+    "app-image-mobile": appImageMobile
   },
   data() {
     return {
@@ -98,24 +104,24 @@ export default {
         if (!this.selected.includes(index)) {
           this.$set(this.selected, index, index);
           await this.$store.dispatch("subscribe", {
-            url: "/show/save",
+            url: "/subscriptions",
             method: "post",
             data
           });
           let response = await this.$store.dispatch("getSubscriptions", {
-            url: "/show",
+            url: "/subscriptions/all",
             method: "get"
           });
           await this.$store.commit("setSubscriptions", response.data.data);
         } else {
           this.$delete(this.selected, index);
           await this.$store.dispatch("unsubscribe", {
-            url: "/show",
+            url: "/subscriptions",
             method: "delete",
             data
           });
           let response = await this.$store.dispatch("getSubscriptions", {
-            url: "/show",
+            url: "/subscriptions/all",
             method: "get"
           });
           this.$store.commit("setSubscriptions", response.data.data);

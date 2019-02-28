@@ -12,7 +12,7 @@
           <template v-for="(series, index) in subscriptions">
             <v-divider :key="index" v-if="index!=0"></v-divider>
             <v-list-tile :key="index">
-              <v-list-tile-avatar tile>
+              <v-list-tile-avatar>
                 <v-img :src="series.posterUrl"></v-img>
               </v-list-tile-avatar>
               <v-list-tile-content>
@@ -21,9 +21,12 @@
               <v-list-tile-action>
                 <app-dialog :series="series">
                   <template slot="subscriptions-button">
-                    <v-btn flat @click="remove(series)" icon>
+                    <v-btn left flat icon @click="remove(series)">
                       <v-icon>remove</v-icon>
                     </v-btn>
+                  </template>
+                  <template slot="subscriptions-info">
+                    <app-info :series="series"></app-info>
                   </template>
                 </app-dialog>
               </v-list-tile-action>
@@ -34,45 +37,50 @@
     </v-layout>
     <v-layout row wrap class="hidden-md-and-up" v-else>
       <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
-        <app-image-2 :series="series">
+        <app-image-mobile :series="series">
           <template slot="subscriptions-image">
             <v-img :src="series.posterUrl" aspect-ratio="0.68" contain class="img"/>
           </template>
           <template slot="subscriptions-button">
-            <v-btn flat @click="remove(series)" icon>
+            <v-btn left flat icon @click="remove(series)">
               <v-icon>remove</v-icon>
             </v-btn>
           </template>
-        </app-image-2>
+          <template slot="subscriptions-info">
+            <app-info :series="series"></app-info>
+          </template>
+        </app-image-mobile>
       </v-flex>
     </v-layout>
-    <v-layout row wrap class="hidden-sm-and-down">
+    <!-- <v-layout row wrap class="hidden-sm-and-down">
       <v-flex v-for="(series, index) in subscriptions" :key="index" xs3>
         <app-image :series="series">
           <template slot="subscriptions-image">
             <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"/>
           </template>
           <template slot="subscriptions-button">
-            <v-btn small icon @click="remove(series)">
+            <v-btn left flat icon small @click="remove(series)">
               <v-icon title="Remove">remove</v-icon>
             </v-btn>
           </template>
         </app-image>
       </v-flex>
-    </v-layout>
+    </v-layout>-->
   </v-container>
 </template>
 
 <script>
 import appImage from "../components/Image.vue";
-import appImage2 from "../components/Image-2.vue";
+import appImageMobile from "../components/Image-2.vue";
 import appDialog from "../components/Dialog.vue";
+import appInfo from "../components/Info.vue";
 
 export default {
   components: {
-    appImage,
-    "app-image-2": appImage2,
-    "app-dialog": appDialog
+    "app-image": appImage,
+    "app-image-mobile": appImageMobile,
+    "app-dialog": appDialog,
+    "app-info": appInfo
   },
   data() {
     return {
@@ -85,15 +93,13 @@ export default {
   methods: {
     async remove(data) {
       try {
-        data.id = Number(data._id);
-        delete data._id;
         await this.$store.dispatch("unsubscribe", {
-          url: "/show",
+          url: "/subscriptions",
           method: "delete",
           data
         });
         let response = await this.$store.dispatch("getSubscriptions", {
-          url: "/show",
+          url: "/subscriptions/all",
           method: "get"
         });
         this.$store.commit("setSubscriptions", response.data.data);

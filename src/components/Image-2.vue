@@ -1,7 +1,9 @@
 <template>
   <v-card flat tile>
     <v-responsive>
+      <slot name="search-image"/>
       <slot name="subscriptions-image"/>
+      <slot name="calendar-image"/>
     </v-responsive>
     <v-card-actions>
       <span class="ellipsis" :title="series.seriesName">{{ series.seriesName }}</span>
@@ -15,6 +17,15 @@
         </template>
         <template slot="calendar-button">
           <slot name="calendar-button"></slot>
+        </template>
+        <template slot="search-info">
+          <slot name="search-info"></slot>
+        </template>
+        <template slot="subscriptions-info">
+          <slot name="subscriptions-info"></slot>
+        </template>
+        <template slot="calendar-info">
+          <slot name="calendar-info"></slot>
         </template>
       </app-dialog>
     </v-card-actions>

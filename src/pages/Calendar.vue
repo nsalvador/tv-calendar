@@ -29,7 +29,7 @@
           <template v-for="(series, index) in subscriptions">
             <v-divider :key="index" v-if="index!=0"></v-divider>
             <v-list-tile :key="index">
-              <v-list-tile-avatar tile>
+              <v-list-tile-avatar>
                 <v-img :src="series.posterUrl"></v-img>
               </v-list-tile-avatar>
               <v-list-tile-content>
@@ -38,9 +38,12 @@
               <v-list-tile-action>
                 <app-dialog :series="series">
                   <template slot="calendar-button">
-                    <v-btn flat icon>
+                    <v-btn flat icon left>
                       <v-icon></v-icon>
                     </v-btn>
+                  </template>
+                  <template slot="calendar-info">
+                    <app-info :series="series"></app-info>
                   </template>
                 </app-dialog>
               </v-list-tile-action>
@@ -54,19 +57,22 @@
         <app-spinner/>
       </v-flex>
       <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
-        <app-image-2 :series="series">
-          <template slot="subscriptions-image">
+        <app-image-mobile :series="series">
+          <template slot="calendar-image">
             <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
           </template>
           <template slot="calendar-button">
-            <v-btn flat icon>
+            <v-btn flat icon left>
               <v-icon></v-icon>
             </v-btn>
           </template>
-        </app-image-2>
+          <template slot="calendar-info">
+            <app-info :series="series"></app-info>
+          </template>
+        </app-image-mobile>
       </v-flex>
     </v-layout>
-    <v-layout row wrap class="hidden-sm-and-down">
+    <!-- <v-layout row wrap class="hidden-sm-and-down">
       <v-flex v-show="loaded">
         <app-spinner/>
       </v-flex>
@@ -77,15 +83,16 @@
           </template>
         </app-image>
       </v-flex>
-    </v-layout>
+    </v-layout>-->
   </v-container>
 </template>
 
 <script>
 import appImage from "../components/Image.vue";
-import appImage2 from "../components/Image-2.vue";
+import appImageMobile from "../components/Image-2.vue";
 import appSpinner from "../components/Spinner.vue";
 import appDialog from "../components/Dialog.vue";
+import appInfo from "../components/Info.vue";
 
 export default {
   computed: {
@@ -115,21 +122,22 @@ export default {
     };
   },
   components: {
-    appImage,
-    "app-image-2": appImage2,
-    appSpinner,
-    "app-dialog": appDialog
+    "app-image": appImage,
+    "app-image-mobile": appImageMobile,
+    "app-spinner": appSpinner,
+    "app-dialog": appDialog,
+    "app-info": appInfo
   },
   methods: {
     async search(day) {
       try {
         this.loaded = true;
         this.$store.commit("setSeries", []);
-        const config = { url: `/show/${day}`, method: "get" };
-        let response = await this.$store.dispatch(
-          "getSubscriptionsByDay",
-          config
-        );
+        const config = {
+          url: `/subscriptions/${day}`,
+          method: "get"
+        };
+        let response = await this.$store.dispatch("getSubscriptions", config);
         this.loaded = false;
         this.$store.commit("setSeries", response.data.data);
       } catch (error) {
