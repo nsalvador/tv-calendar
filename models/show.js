@@ -16,10 +16,17 @@ module.exports = class Show {
     this._id = show.id.toString();
     this.seriesName = show.seriesName;
     this.posterKey = show.posterKey;
+    this.posterUrl = null;
+    this.status = null;
+    this.overview = null;
+    this.airsDayOfWeek = null;
+    this.airedSeasons = null;
+    this.airedEpisodes = null;
   }
 
-  static get(show) {
+  get() {
     return new Promise(async (resolve, reject) => {
+      let show = this;
       let [response, series, summary] = [3].fill(null);
       try {
         response = await axios.post('/login', {
@@ -37,15 +44,13 @@ module.exports = class Show {
           Key: show.posterKey
         }, (error, data) => {
           if (error) throw error;
-          resolve({
-            ...show,
-            status: series.status,
-            overview: series.overview,
-            airsDayOfWeek: series.airsDayOfWeek,
-            airedSeasons: summary.airedSeasons,
-            airedEpisodes: summary.airedEpisodes,
-            posterUrl: data
-          });
+          show.posterUrl = data;
+          show.status = series.status;
+          show.overview = series.overview;
+          show.airsDayOfWeek = series.airsDayOfWeek;
+          show.airedSeasons = summary.airedSeasons;
+          show.airedEpisodes = summary.airedEpisodes;
+          resolve('Success');
         });
       }
       catch (error) {

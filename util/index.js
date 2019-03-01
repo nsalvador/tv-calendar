@@ -14,15 +14,15 @@ module.exports = (id) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
       response = await axios.get(`/series/${id}/images`);
       let count = response.data.data.poster;
-      if (typeof count == 'undefined') {
-        posterKey = "";
-      }
-      else {
+      if (count) {
         response = await axios.get(`/series/${id}/images/query`, {
           params: { keyType: "poster" }
         });
         let source = response.data.data[Math.floor(Math.random() * count + 1) - 1].fileName;
         posterKey = (source !== "") ? source.split("/")[1] : "";
+      }
+      else {
+        posterKey = "";
       }
       resolve(posterKey);
     }

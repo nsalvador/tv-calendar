@@ -3,8 +3,6 @@ const path = require("path");
 const fs = require("fs");
 const axios = require('axios');
 
-const Show = require('./show');
-
 const AWS = require("aws-sdk");
 AWS.config.update({
   accessKeyId: process.env.S3_KEY,
@@ -26,12 +24,8 @@ module.exports = class Subscriptions {
             db.collection('subscriptions')
               .find({})
               .sort({ seriesName: 1 })
-              .toArray(async (error, dataSet) => {
+              .toArray(async (error, data) => {
                 if (error) throw error;
-                let data = [];
-                for (let show of dataSet) {
-                  data.push(await Show.get(show));
-                }
                 if (value !== 'all') {
                   data = data.filter(show => {
                     return show.airsDayOfWeek === value
@@ -96,8 +90,9 @@ module.exports = class Subscriptions {
               ContentEncoding: 'base64',
               ContentType: 'image/jpeg',
               Body: fs.createReadStream(filename)
-            }, error => {
+            }, async (error) => {
               if (error) throw error;
+              await show.get();
               db.collection('subscriptions').insertOne(show, error => {
                 if (error) throw error;
                 fs.unlink(filename, error => {
