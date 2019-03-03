@@ -1,14 +1,6 @@
 const axios = require("axios");
 const getPosterKey = require('../util');
 
-const AWS = require("aws-sdk");
-AWS.config.update({
-  accessKeyId: process.env.S3_KEY,
-  secretAccessKey: process.env.S3_SECRET,
-  region: "us-east-2"
-});
-const s3 = new AWS.S3();
-
 axios.defaults.baseURL = "https://api.thetvdb.com";
 
 module.exports = class Show {
@@ -39,19 +31,14 @@ module.exports = class Show {
         series = response.data.data;
         response = await axios.get(`/series/${show._id}/episodes/summary`);
         summary = response.data.data;
-        s3.getSignedUrl('getObject', {
-          Bucket: 'tv-calendar-assets',
-          Key: show.posterKey
-        }, (error, data) => {
-          if (error) throw error;
-          show.posterUrl = data;
-          show.status = series.status;
-          show.overview = series.overview;
-          show.airsDayOfWeek = series.airsDayOfWeek;
-          show.airedSeasons = summary.airedSeasons;
-          show.airedEpisodes = summary.airedEpisodes;
-          resolve('Success');
-        });
+
+        show.status = series.status;
+        show.overview = series.overview;
+        show.airsDayOfWeek = series.airsDayOfWeek;
+        show.airedSeasons = summary.airedSeasons;
+        show.airedEpisodes = summary.airedEpisodes;
+
+        resolve('Success');
       }
       catch (error) {
         reject(error);
