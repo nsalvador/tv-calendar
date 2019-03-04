@@ -8,7 +8,7 @@
         <v-btn icon @click="dialog=false">
           <v-icon>close</v-icon>
         </v-btn>
-        <v-container>
+        <v-container class="overflow-x-hidden">
           <div class="text-xs-center title ellipsis">{{ series.seriesName }}</div>
         </v-container>
         <v-spacer></v-spacer>
