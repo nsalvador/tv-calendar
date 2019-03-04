@@ -1,6 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
 const path = require("path");
 const fs = require("fs");
+const fsPromise = require('fs').promises;
 const axios = require('axios');
 
 const AWS = require("aws-sdk");
@@ -17,20 +18,15 @@ module.exports = class Subscriptions {
   get(value) {
     return new Promise(async (resolve, reject) => {
       try {
-        let db = await MongoClient.connect(MONGODB_URI);
-        db.collection('subscriptions')
-          .find({})
-          .sort({ seriesName: 1 })
-          .toArray((error, data) => {
-            if (error) throw error;
-            if (value !== 'all') {
-              data = data.filter(show => {
-                return show.airsDayOfWeek === value
-              });
-            }
-            db.close();
-            resolve(data);
+        const db = await MongoClient.connect(MONGODB_URI);
+        let data = await db.collection('subscriptions').find({}).sort({ seriesName: 1 }).toArray();
+        if (value !== 'all') {
+          data = data.filter(show => {
+            return show.airsDayOfWeek === value;
           });
+        }
+        db.close();
+        resolve(data);
       }
       catch (error) {
         reject(error);
@@ -39,21 +35,17 @@ module.exports = class Subscriptions {
   }
 
   remove(show) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       try {
-        let db = await MongoClient.connect(MONGODB_URI);
         s3.deleteObject({
           Bucket: 'tv-calendar-assets',
           Key: show.posterKey
-        }, error => {
+        }, async (error) => {
           if (error) throw error;
-          db.collection('subscriptions').deleteOne({
-            _id: show._id
-          }, error => {
-            if (error) throw error;
-            db.close();
-            resolve('Success');
-          });
+          let db = await MongoClient.connect(MONGODB_URI);
+          await db.collection('subscriptions').deleteOne({ _id: show._id });
+          db.close();
+          resolve('Success');
         });
       }
       catch (error) {
@@ -83,14 +75,10 @@ module.exports = class Subscriptions {
             show.posterUrl = data.Location;
             await show.get();
             let db = await MongoClient.connect(MONGODB_URI);
-            db.collection('subscriptions').insertOne(show, error => {
-              if (error) throw error;
-              fs.unlink(filename, error => {
-                if (error) throw error;
-                db.close();
-                resolve('Success');
-              });
-            });
+            await db.collection('subscriptions').insertOne(show);
+            await fsPromise.unlink(filename);
+            db.close();
+            resolve('Success');
           });
         });
       }

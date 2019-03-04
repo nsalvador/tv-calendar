@@ -35,10 +35,7 @@
             </v-btn>
           </template>
           <template slot="search-info">
-            <h4>Overview:</h4>
-            <p class="caption">{{ item.overview }}</p>
-            <h4>Status:</h4>
-            <p class="caption">{{ item.status }}</p>
+            <app-info :series="item" :display="false"></app-info>
           </template>
         </app-image-mobile>
       </v-flex>
@@ -68,12 +65,14 @@
 import appImage from "../components/Image.vue";
 import appImageMobile from "../components/Image-2.vue";
 import appSpinner from "../components/Spinner.vue";
+import appInfo from "../components/Info.vue";
 
 export default {
   components: {
     appImage,
     appSpinner,
-    "app-image-mobile": appImageMobile
+    "app-image-mobile": appImageMobile,
+    "app-info": appInfo
   },
   data() {
     return {

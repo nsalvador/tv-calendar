@@ -9,7 +9,7 @@
           <v-icon>close</v-icon>
         </v-btn>
         <v-container>
-          <div class="text-xs-center title">{{ series.seriesName }}</div>
+          <div class="text-xs-center title ellipsis">{{ series.seriesName }}</div>
         </v-container>
         <v-spacer></v-spacer>
         <v-toolbar-items @click="dialog=false">

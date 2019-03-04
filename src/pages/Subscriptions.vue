@@ -26,7 +26,7 @@
                     </v-btn>
                   </template>
                   <template slot="subscriptions-info">
-                    <app-info :series="series"></app-info>
+                    <app-info :series="series" :display="true"></app-info>
                   </template>
                 </app-dialog>
               </v-list-tile-action>
@@ -47,7 +47,7 @@
             </v-btn>
           </template>
           <template slot="subscriptions-info">
-            <app-info :series="series"></app-info>
+            <app-info :series="series" :display="true"></app-info>
           </template>
         </app-image-mobile>
       </v-flex>
