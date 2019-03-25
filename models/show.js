@@ -23,8 +23,6 @@ module.exports = class Show {
       try {
         response = await axios.post('/login', {
           "apikey": process.env.API_KEY,
-          "username": process.env.USER_NAME,
-          "userkey": process.env.USER_KEY
         });
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         response = await axios.get(`/series/${show._id}`);
@@ -51,9 +49,7 @@ module.exports = class Show {
       let [response, series] = [2].fill(null);
       try {
         response = await axios.post("/login", {
-          "apikey": process.env.API_KEY,
-          "username": process.env.USER_NAME,
-          "userkey": process.env.USER_KEY
+          "apikey": process.env.API_KEY
         });
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         response = await axios.get("/search/series", {

@@ -7,9 +7,7 @@ module.exports = (id) => {
     try {
       let response = null, posterKey = null;
       response = await axios.post('/login', {
-        "apikey": process.env.API_KEY,
-        "username": process.env.USER_NAME,
-        "userkey": process.env.USER_KEY
+        "apikey": process.env.API_KEY
       });
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
       response = await axios.get(`/series/${id}/images`);
@@ -27,6 +25,9 @@ module.exports = (id) => {
       resolve(posterKey);
     }
     catch (error) {
+      if (error.response.status === 404) {
+        return resolve("");
+      }
       reject({
         data: {
           message: error.response.data.Error
