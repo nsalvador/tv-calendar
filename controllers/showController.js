@@ -10,9 +10,9 @@ module.exports = {
       });
     }
     catch (error) {
-      res.status(error.status).json({
+      res.status(error.response.status).json({
         data: {
-          message: error.data.message
+          message: error.response.data.Error
         }
       });
     }

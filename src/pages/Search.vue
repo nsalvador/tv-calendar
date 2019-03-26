@@ -1,46 +1,44 @@
 <template>
-  <v-container grid-list-md>
-    <v-layout>
+  <v-container style="height: 100%">
+    <v-layout column fill-height>
       <v-snackbar v-model="snackbar" top :timeout="timeout">
         <span class="subheading">{{ message }}</span>
         <v-btn flat @click="snackbar=false">Close</v-btn>
       </v-snackbar>
+      <v-toolbar>
+        <v-text-field
+          placeholder="Search for a TV series"
+          clearable
+          prepend-inner-icon="search"
+          @keyup.enter="search"
+          v-model="show"
+        ></v-text-field>
+      </v-toolbar>
+      <app-spinner v-if="loaded"/>
+      <v-container fluid fill-height grid-list-md v-else class="px-0">
+        <v-layout row wrap>
+          <v-flex v-for="(item, index) in series" :key="index" xs6>
+            <app-image-mobile :series="item">
+              <template slot="search-image">
+                <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
+              </template>
+              <template slot="search-button">
+                <v-btn left flat icon @click="subscribe(item, index)">
+                  <v-icon v-if="!isSubscribed(index)">add</v-icon>
+                  <v-icon v-else>remove</v-icon>
+                </v-btn>
+              </template>
+              <template slot="search-info">
+                <app-info :series="item" :display="false"></app-info>
+              </template>
+            </app-image-mobile>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-layout>
-    <v-layout>
-      <v-flex>
-        <v-toolbar>
-          <v-text-field
-            placeholder="Search for a TV series"
-            clearable
-            prepend-inner-icon="search"
-            @keyup.enter="search"
-            v-model="show"
-          ></v-text-field>
-        </v-toolbar>
-      </v-flex>
-    </v-layout>
-    <v-layout row wrap class="hidden-md-and-up">
-      <v-flex v-show="loaded">
-        <app-spinner/>
-      </v-flex>
-      <v-flex v-for="(item, index) in series" :key="index" xs6>
-        <app-image-mobile :series="item">
-          <template slot="search-image">
-            <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
-          </template>
-          <template slot="search-button">
-            <v-btn left flat icon @click="subscribe(item, index)">
-              <v-icon v-if="!isSubscribed(index)">add</v-icon>
-              <v-icon v-else>remove</v-icon>
-            </v-btn>
-          </template>
-          <template slot="search-info">
-            <app-info :series="item" :display="false"></app-info>
-          </template>
-        </app-image-mobile>
-      </v-flex>
-    </v-layout>
-    <!-- <v-layout row wrap class="hidden-sm-and-down">
+  </v-container>
+  <!--
+  <v-layout row wrap class="hidden-sm-and-down">
       <v-flex v-show="loaded">
         <app-spinner/>
       </v-flex>
@@ -57,8 +55,8 @@
           </template>
         </app-image>
       </v-flex>
-    </v-layout>-->
-  </v-container>
+    </v-layout>
+  -->
 </template>
 
 <script>
