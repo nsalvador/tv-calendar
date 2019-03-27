@@ -39,9 +39,7 @@
   </v-container>
   <!--
   <v-layout row wrap class="hidden-sm-and-down">
-      <v-flex v-show="loaded">
-        <app-spinner/>
-      </v-flex>
+      <
       <v-flex v-for="(item, index) in series" :key="index" xs3>
         <app-image :series="item">
           <template slot="search-image">
