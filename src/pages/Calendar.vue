@@ -2,9 +2,7 @@
   <v-container style="height: 100%">
     <v-layout column fill-height>
       <v-select :items="days" @change="search" v-model="row" label="Select a day"></v-select>
-
       <app-spinner v-if="loaded"/>
-
       <v-container v-else-if="isListView" fluid class="px-0">
         <v-list class="py-0" v-if="isListView">
           <template v-for="(series, index) in subscriptions">
@@ -32,10 +30,26 @@
           </template>
         </v-list>
       </v-container>
-
       <v-container v-else fluid grid-list-md fill-height class="px-0">
-        <v-layout row wrap>
+        <v-layout row wrap class="hidden-md-and-up">
           <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
+            <app-image-mobile :series="series">
+              <template slot="calendar-image">
+                <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
+              </template>
+              <template slot="calendar-button">
+                <v-btn flat icon left>
+                  <v-icon></v-icon>
+                </v-btn>
+              </template>
+              <template slot="calendar-info">
+                <app-info :series="series" :display="true"></app-info>
+              </template>
+            </app-image-mobile>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap class="hidden-sm-and-down">
+          <v-flex v-for="(series, index) in subscriptions" :key="index" xs3>
             <app-image-mobile :series="series">
               <template slot="calendar-image">
                 <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"></v-img>
@@ -54,31 +68,6 @@
       </v-container>
     </v-layout>
   </v-container>
-  <!--
-  <v-container>
-    
-    
-    <v-layout class="hidden-sm-and-down">
-      <v-flex>
-        <v-radio-group row v-model="row" @change="search">
-          <v-radio v-for="(day, index) in days" :key="index" :label="day" :value="day"></v-radio>
-        </v-radio-group>
-      </v-flex>
-    </v-layout>
-    
-    
-  -->
-  <!-- <v-layout row wrap class="hidden-sm-and-down">
-      
-      <v-flex v-for="(value, key) in subscriptions" :key="key" xs3>
-        <app-image :series="value">
-          <template slot="subscriptions-image">
-            <v-img :src="value.posterUrl" contain aspect-ratio="0.68" class="img"/>
-          </template>
-        </app-image>
-      </v-flex>
-  </v-layout>
-  -->
 </template>
 
 <script>

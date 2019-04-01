@@ -1,11 +1,5 @@
 <template>
   <v-container grid-list-md>
-    <v-layout>
-      <v-snackbar v-model="snackbar" top :timeout="timeout">
-        <span class="subheading">{{ message }}</span>
-        <v-btn flat @click="snackbar=false">Close</v-btn>
-      </v-snackbar>
-    </v-layout>
     <v-layout row v-if="isListView">
       <v-flex xs12>
         <v-list class="py-0">
@@ -35,37 +29,42 @@
         </v-list>
       </v-flex>
     </v-layout>
-    <v-layout row wrap class="hidden-md-and-up" v-else>
-      <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
-        <app-image-mobile :series="series">
-          <template slot="subscriptions-image">
-            <v-img :src="series.posterUrl" aspect-ratio="0.68" contain class="img"/>
-          </template>
-          <template slot="subscriptions-button">
-            <v-btn left flat icon @click="remove(series)">
-              <v-icon>remove</v-icon>
-            </v-btn>
-          </template>
-          <template slot="subscriptions-info">
-            <app-info :series="series" :display="true"></app-info>
-          </template>
-        </app-image-mobile>
-      </v-flex>
-    </v-layout>
-    <!-- <v-layout row wrap class="hidden-sm-and-down">
-      <v-flex v-for="(series, index) in subscriptions" :key="index" xs3>
-        <app-image :series="series">
-          <template slot="subscriptions-image">
-            <v-img :src="series.posterUrl" contain aspect-ratio="0.68" class="img"/>
-          </template>
-          <template slot="subscriptions-button">
-            <v-btn left flat icon small @click="remove(series)">
-              <v-icon title="Remove">remove</v-icon>
-            </v-btn>
-          </template>
-        </app-image>
-      </v-flex>
-    </v-layout>-->
+    <template v-else>
+      <v-layout row wrap class="hidden-md-and-up">
+        <v-flex v-for="(series, index) in subscriptions" :key="index" xs6>
+          <app-image-mobile :series="series">
+            <template slot="subscriptions-image">
+              <v-img :src="series.posterUrl" aspect-ratio="0.68" contain class="img"/>
+            </template>
+            <template slot="subscriptions-button">
+              <v-btn left flat icon @click="remove(series)">
+                <v-icon>remove</v-icon>
+              </v-btn>
+            </template>
+            <template slot="subscriptions-info">
+              <app-info :series="series" :display="true"></app-info>
+            </template>
+          </app-image-mobile>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap class="hidden-sm-and-down">
+        <v-flex v-for="(series, index) in subscriptions" :key="index" xs3>
+          <app-image-mobile :series="series">
+            <template slot="subscriptions-image">
+              <v-img :src="series.posterUrl" aspect-ratio="0.68" contain class="img"/>
+            </template>
+            <template slot="subscriptions-button">
+              <v-btn left flat icon @click="remove(series)">
+                <v-icon>remove</v-icon>
+              </v-btn>
+            </template>
+            <template slot="subscriptions-info">
+              <app-info :series="series" :display="true"></app-info>
+            </template>
+          </app-image-mobile>
+        </v-flex>
+      </v-layout>
+    </template>
   </v-container>
 </template>
 

@@ -16,8 +16,26 @@
       </v-toolbar>
       <app-spinner v-if="loaded"/>
       <v-container fluid fill-height grid-list-md v-else class="px-0">
-        <v-layout row wrap>
+        <v-layout row wrap class="hidden-md-and-up">
           <v-flex v-for="(item, index) in series" :key="index" xs6>
+            <app-image-mobile :series="item">
+              <template slot="search-image">
+                <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
+              </template>
+              <template slot="search-button">
+                <v-btn left flat icon @click="subscribe(item, index)">
+                  <v-icon v-if="!isSubscribed(index)">add</v-icon>
+                  <v-icon v-else>remove</v-icon>
+                </v-btn>
+              </template>
+              <template slot="search-info">
+                <app-info :series="item" :display="false"></app-info>
+              </template>
+            </app-image-mobile>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap class="hidden-sm-and-down">
+          <v-flex v-for="(item, index) in series" :key="index" xs3>
             <app-image-mobile :series="item">
               <template slot="search-image">
                 <v-img :src="getImage(item)" aspect-ratio="0.68" contain class="img"/>
@@ -37,24 +55,6 @@
       </v-container>
     </v-layout>
   </v-container>
-  <!--
-  <v-layout row wrap class="hidden-sm-and-down">
-      <
-      <v-flex v-for="(item, index) in series" :key="index" xs3>
-        <app-image :series="item">
-          <template slot="search-image">
-            <v-img :src="getImage(item)" contain aspect-ratio="0.68" class="img"/>
-          </template>
-          <template slot="search-button">
-            <v-btn flat left small icon @click="subscribe(item, index)">
-              <v-icon title="Subscribe" v-if="!isSubscribed(index)" left>add</v-icon>
-              <v-icon title="Unsubscribe" v-else left>remove</v-icon>
-            </v-btn>
-          </template>
-        </app-image>
-      </v-flex>
-    </v-layout>
-  -->
 </template>
 
 <script>

@@ -3,7 +3,7 @@
     <v-responsive>
       <div class="card">
         <slot name="search-image"/>
-        <slot name="subscriptions-image"/>
+        <!-- <slot name="subscriptions-image"/> -->
         <div class="overview">
           <h3>{{ series.seriesName }}</h3>
           <p>{{ series.overview }}</p>
